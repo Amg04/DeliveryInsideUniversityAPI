@@ -27,7 +27,7 @@ namespace ProjectAPI.Controllers
         {
             var products = unitOfWork.Repository<Product>().GetAll();
             if (!products.Any())
-                return NotFound("No categories found.");
+                return NotFound("No Products found.");
 
             var productDTO = products.Select(c => c.ToProductDTO()).ToList();
 

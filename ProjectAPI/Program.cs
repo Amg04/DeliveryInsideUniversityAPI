@@ -11,10 +11,13 @@ using Stripe;
 using System.Text;
 using Utilities;
 
+
+
 namespace ProjectAPI
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -63,15 +66,15 @@ namespace ProjectAPI
                 // verified key ÍØ åäÇ ÇáÞíæÏ Çááí ÇäÊ ÚÇæÒåÇ
                 // åÏíáæ Çáßí æ ÇáÊæßä áæ ØáÚ äÝÓ ÇáÏÇÊÇ íÈÞÇ ÕÍ
                 Options.SaveToken = true;
-                Options.RequireHttpsMetadata = false; 
+                Options.RequireHttpsMetadata = false;
                 Options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
                     ValidIssuer = builder.Configuration["JWT:IssuerIP"],
                     ValidateAudience = true,
-                    ValidAudience = builder.Configuration["JWT:AudienceIP"], 
+                    ValidAudience = builder.Configuration["JWT:AudienceIP"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                    .GetBytes(builder.Configuration["JWT:SecretKey"])) 
+                    .GetBytes(builder.Configuration["JWT:SecretKey"]))
                 };
             });
 
@@ -142,7 +145,7 @@ namespace ProjectAPI
             builder.Services.AddEndpointsApiExplorer();
             //builder.Services.AddSwaggerGen();
 
-           
+
 
             var app = builder.Build();
 
@@ -180,12 +183,17 @@ namespace ProjectAPI
             app.UseSession();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //if (app.Environment.IsDevelopment())
+            //{
+            app.UseSwagger();
+            //app.UseSwaggerUI();
+            //}
+            //}
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-           
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Delivery API V1");
+                c.RoutePrefix = string.Empty; // ?? ????? Swagger UI ????? ??? ?????? ??????? (/)
+            });
 
             app.MapControllers();
 

@@ -2,7 +2,6 @@
 using BLLProject.interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ProjectAPI.Controllers;
 using ProjectAPI.DTO.ProductDTOs;
@@ -63,7 +62,7 @@ namespace ProjectAPI.Tests
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(404, result.StatusCode);
-            Assert.AreEqual("No categories found.", result.Value);
+            Assert.AreEqual("No Products found.", result.Value);
         }
     }
 }
