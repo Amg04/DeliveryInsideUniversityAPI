@@ -6,15 +6,12 @@ namespace BAL.Repositories
 {
     public class OrderItemRepository : GenericRepository<OrderItem>, IOrderItemRepository
     {
-        private readonly RestaurantAPIContext context;
-
         public OrderItemRepository(RestaurantAPIContext context) : base(context)
         {
-            this.context = context;
         }
         public void RemoveRange(IEnumerable<OrderItem> entities)
         {
-            context.RemoveRange(entities);
+            dbContext.RemoveRange(entities);
         }
 
        

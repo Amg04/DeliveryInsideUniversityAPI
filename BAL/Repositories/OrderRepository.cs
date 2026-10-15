@@ -10,16 +10,13 @@ namespace BAL.Repositories
 {
     class OrderRepository : GenericRepository<Order>, IOrderRepository
     {
-        private readonly RestaurantAPIContext context;
-
         public OrderRepository(RestaurantAPIContext context) : base(context)
         {
-            this.context = context;
         }
         public void UpdatePaymentStatus(int id, PaymentStatus paymentStatus)
         {
-            var OrderFromDb = context.Order.FirstOrDefault(x => x.id == id);
-            var paymentMethod = context.Payment.FirstOrDefault(x => x.OrderId == id);
+            var OrderFromDb = dbContext.Order.FirstOrDefault(x => x.id == id);
+            var paymentMethod = dbContext.Payment.FirstOrDefault(x => x.OrderId == id);
             if (OrderFromDb != null)
             {
                 if (paymentMethod != null)
@@ -32,7 +29,7 @@ namespace BAL.Repositories
 
         public void UpdateOrderStatus(int id, OrderStatus orderStatus)
         {
-            var OrderFromDb = context.Order.FirstOrDefault(x => x.id == id);
+            var OrderFromDb = dbContext.Order.FirstOrDefault(x => x.id == id);
             if (OrderFromDb != null)
                 OrderFromDb.OrderStatus = orderStatus;
         }
